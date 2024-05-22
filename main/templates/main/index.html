@@ -1,0 +1,146 @@
+{% extends 'main/base_template.html' %}
+
+{% block message %}
+    <div class="modal" id="message-block" style="display: none">
+        <div>
+            <div class="modal-control-buttons">
+                <span class="span-button" id="message-block-close-button">X</span>
+            </div>
+            <div>
+                <p></p>
+            </div>
+            <div class="modal-control-buttons">
+                <span class="span-button" id="message-block-ok-button">Ок</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $("#message-block-close-button, #message-block-ok-button").click(() => {
+            closeModal($("#message-block"))
+        });
+    </script>
+{% endblock %}
+
+
+
+
+
+{% block menu %}
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
+<style>
+@media only screen and (min-width: 768px) {
+ .dropdown:hover .dropdown-menu {
+ display: block;
+ margin-top: 0;
+ }
+}
+</style>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+ <a class="navbar-brand" href="#">BoxStock</a>
+ <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+ <span class="navbar-toggler-icon"></span>
+ </button>
+
+ <ul class="navbar-nav mr-auto">
+  <li class="nav-item dropdown">
+   <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+ <span>
+                    {% if user.first_name or user.last_name %}
+                        {{ user.get_full_name }}
+                    {% else %}
+                        {{ user }}
+                    {% endif %}
+ </span>
+   </a>
+   <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+    <a class="dropdown-item" href="{% url 'logout' %}">Выйти</a>
+    <!-- <div class="dropdown-divider"></div>-->
+    <!-- <a class="dropdown-item" href="#">Something else here</a>-->
+   </div>
+  </li>
+
+  <li class="nav-item dropdown">
+   <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown_1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Справочники
+   </a>
+   <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+    <a class="dropdown-item" href="{% url 'main:products' %}">Товары</a>
+    <div class="dropdown-divider"></div>
+    <a class="dropdown-item" href="{% url 'main:contractors' %}">Контрагенты</a>
+   </div>
+  </li>
+
+  <li class="nav-item">
+   <a class="nav-link" href="{% url 'main:documents' %}">Документы</a>
+  </li>
+
+  <li class="nav-item dropdown">
+   <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown_2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Отчеты
+   </a>
+   <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+    <a class="dropdown-item" href="{% url 'main:consolidated_report' %}">Сводный отчет по базе данных</a>
+    <div class="dropdown-divider"></div>
+    <a class="dropdown-item" href="{% url 'main:motion_report' %}?report_type=products">Отчет по движениям товаров</a>
+
+    <div class="dropdown-divider"></div>
+    <a class="dropdown-item" href="{% url 'main:motion_report' %}?report_type=contractors">Отчет по операциям с контрагентами</a>
+
+    <div class="dropdown-divider"></div>
+    <a class="dropdown-item" href="{% url 'main:products_to_xls' %}">Список товаров (XLS)</a>
+
+    <div class="dropdown-divider"></div>
+    <a class="dropdown-item" href="{% url 'main:contractors_to_xls' %}">Список контрагентов (XLS)</a>
+
+</div>
+ </li>
+
+
+  <li class="nav-item dropdown">
+   <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown_3" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Сервисы
+   </a>
+   <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+    <a class="dropdown-item" href="/admin/">Администрирование</a>
+    <div class="dropdown-divider"></div>
+    <a class="dropdown-item" href="{% url 'main:remove_marked_objects' %}">Удаление помеченных объектов</a>
+
+    <div class="dropdown-divider"></div>
+    <a class="dropdown-item" href="{% url 'main:import_products' %}">Импорт товаров</a>
+
+    <div class="dropdown-divider"></div>
+    <a class="dropdown-item" href="{% url 'main:storage_items' %}">Управление остатками</a>
+
+    <div class="dropdown-divider"></div>
+    <a class="dropdown-item" href="{% url 'main:storage_items' %}">Просмотр остатков</a>
+
+    <div class="dropdown-divider"></div>
+    <a class="dropdown-item" href="{% url 'main:operations' %}">Журнал операций</a>
+
+</div>
+ </li>
+
+ </ul>
+
+ </div>
+<!--/.nav-collapse -->
+</nav>
+<!--/.navbar -->
+
+
+<script>
+$('.dropdown-toggle').click(function(e) {
+ if ($(document).width() > 768) {
+ e.preventDefault();
+ var url = $(this).attr('href');
+ if (url !== '#') {
+ window.location.href = url;
+ }
+ }
+});
+</script>
+
+{% endblock %}
